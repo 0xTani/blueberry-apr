@@ -33,7 +33,7 @@ async function fetchAuraApr(name, poolId) {
 
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
   await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
@@ -69,12 +69,15 @@ async function fetchConvexApr(name, poolId) {
   console.log(`fetching convex ${name}`);
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
+  console.log(`page loaded convex ${name}`);
+
   const page = await browser.newPage();
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
     waitUntil: "networkidle0",
   });
+  console.log(`page goto convex ${name}`);
 
   // Using XPath to find the element containing the APR percentage
 
