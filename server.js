@@ -143,7 +143,7 @@ const updateData = async () => {
 };
 
 // Schedule data updates every 10 minutes using cron syntax
-cron.schedule("*/10 * * * *", updateData);
+// cron.schedule("*/10 * * * *", updateData);
 
 // app.use(
 //   cors({
