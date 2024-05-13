@@ -64,6 +64,7 @@ async function fetchAuraApr(name, poolId) {
 
 async function fetchConvexApr(name, poolId) {
   const browser = await puppeteer.launch({
+    executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
