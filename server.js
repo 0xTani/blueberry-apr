@@ -30,7 +30,11 @@ const db = new sqlite3.Database(
 
 async function fetchAuraApr(name, poolId) {
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-features=site-per-process",
+    ],
   });
   const page = await browser.newPage();
   await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
@@ -64,7 +68,11 @@ async function fetchAuraApr(name, poolId) {
 
 async function fetchConvexApr(name, poolId) {
   const browser = await puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-features=site-per-process",
+    ],
   });
   const page = await browser.newPage();
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
