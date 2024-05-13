@@ -164,7 +164,7 @@ app.get("/apr", (req, res) => {
   });
 });
 
-server.listen(3030, () => {
+server.listen(443, () => {
   // updateData();
   console.log("Server started on http://localhost:3030");
 });
