@@ -28,22 +28,6 @@ const db = new sqlite3.Database(
   }
 );
 
-// Function to fetch data using Puppeteer
-const fetchData = async () => {
-  const browser = await Puppeteer.launch({
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  });
-  const page = await browser.newPage();
-  // Replace 'your_url' with the URL you want to scrape
-  await page.goto("your_url");
-
-  // Assume getData() is your function to extract data from the page
-  const results = await page.evaluate(() => getData());
-
-  await browser.close();
-  return results;
-};
-
 async function fetchAuraApr(name, poolId) {
   const browser = await puppeteer.launch({
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -79,7 +63,9 @@ async function fetchAuraApr(name, poolId) {
 }
 
 async function fetchConvexApr(name, poolId) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
   const page = await browser.newPage();
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
     waitUntil: "networkidle0",
