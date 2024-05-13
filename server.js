@@ -8,7 +8,7 @@ const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+// const wss = new WebSocket.Server({ server });
 
 // Initialize SQLite Database
 const db = new sqlite3.Database(
@@ -113,11 +113,11 @@ const updatePoolData = async (name, poolid, apr, target) => {
 
       console.log("data", entry);
       // Notify all connected WebSocket clients
-      wss.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify(entry));
-        }
-      });
+      // wss.clients.forEach((client) => {
+      //   if (client.readyState === WebSocket.OPEN) {
+      //     client.send(JSON.stringify(entry));
+      //   }
+      // });
     }
   );
 };
