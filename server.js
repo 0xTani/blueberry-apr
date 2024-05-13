@@ -33,7 +33,8 @@ async function fetchAuraApr(name, poolId) {
 
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
-    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    dumpio: true,
   });
   const page = await browser.newPage();
   await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
@@ -69,7 +70,8 @@ async function fetchConvexApr(name, poolId) {
   console.log(`fetching convex ${name}`);
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
-    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    dumpio: true,
   });
   console.log(`page loaded convex ${name}`);
 
@@ -122,16 +124,16 @@ const updatePoolData = async (name, poolid, apr, target) => {
 
 const updateData = async () => {
   fetchAuraApr("pxETH/wETH", 185);
-  fetchAuraApr("rETH/wETH", 109);
-  fetchAuraApr("alcx/wETH", 74);
+  // fetchAuraApr("rETH/wETH", 109);
+  // fetchAuraApr("alcx/wETH", 74);
 
-  fetchConvexApr("ALCX/FRAXBP", 120);
-  fetchConvexApr("OHM/FRAXBP", 138); // weird
-  fetchConvexApr("stETH/ETH", 25);
-  fetchConvexApr("pyUSD/USDC", 270);
-  fetchConvexApr("PXETH/WETH", 271);
-  fetchConvexApr("CRVUSD/USDC", 182);
-  fetchConvexApr("CRVUSD/USDT", 179);
+  // fetchConvexApr("ALCX/FRAXBP", 120);
+  // fetchConvexApr("OHM/FRAXBP", 138); // weird
+  // fetchConvexApr("stETH/ETH", 25);
+  // fetchConvexApr("pyUSD/USDC", 270);
+  // fetchConvexApr("PXETH/WETH", 271);
+  // fetchConvexApr("CRVUSD/USDC", 182);
+  // fetchConvexApr("CRVUSD/USDT", 179);
 };
 
 // Schedule data updates every 10 minutes using cron syntax
