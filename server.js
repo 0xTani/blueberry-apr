@@ -137,7 +137,7 @@ const updateData = async () => {
 };
 
 // Schedule data updates every 10 minutes using cron syntax
-cron.schedule("*/10 * * * *", updateData);
+// cron.schedule("*/10 * * * *", updateData);
 
 // app.use(
 //   cors({
@@ -159,6 +159,6 @@ app.get("/apr", (req, res) => {
 });
 
 server.listen(3030, () => {
-  updateData();
+  // updateData();
   console.log("Server started on http://localhost:3030");
 });
