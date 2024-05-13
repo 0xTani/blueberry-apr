@@ -29,21 +29,19 @@ const db = new sqlite3.Database(
 );
 
 async function fetchAuraApr(name, poolId) {
-  const browser = await puppeteer
-    .launch({
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-features=site-per-process",
-      ],
-    })
-    .catch((e) => console.log(e));
+  const browser = await puppeteer.launch({
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-features=site-per-process",
+    ],
+    ignoreDefaultArgs: ["--disable-extensions"],
+  });
+
   const page = await browser.newPage();
-  await page
-    .goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
-      waitUntil: "networkidle0",
-    })
-    .catch((e) => console.log(e));
+  await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
+    waitUntil: "networkidle0",
+  });
 
   // Using XPath to find the element containing the APR percentage
 
@@ -71,21 +69,18 @@ async function fetchAuraApr(name, poolId) {
 }
 
 async function fetchConvexApr(name, poolId) {
-  const browser = await puppeteer
-    .launch({
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-features=site-per-process",
-      ],
-    })
-    .catch((e) => console.log(e));
-  const page = await browser.newPage();
-  await page
-    .goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
-      waitUntil: "networkidle0",
-    })
-    .catch((e) => console.log(e)); // Replace with the URL of your website
+  const browser = await puppeteer.launch({
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-features=site-per-process",
+    ],
+    ignoreDefaultArgs: ["--disable-extensions"],
+  });
+
+  await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
+    waitUntil: "networkidle0",
+  });
 
   // Using XPath to find the element containing the APR percentage
 
