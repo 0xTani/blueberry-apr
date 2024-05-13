@@ -29,6 +29,8 @@ const db = new sqlite3.Database(
 );
 
 async function fetchAuraApr(name, poolId) {
+  console.log(`fetching aura ${name}`);
+
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -64,6 +66,7 @@ async function fetchAuraApr(name, poolId) {
 }
 
 async function fetchConvexApr(name, poolId) {
+  console.log(`fetching convex ${name}`);
   const browser = await puppeteer.launch({
     executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
