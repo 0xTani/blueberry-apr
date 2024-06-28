@@ -125,10 +125,10 @@ const updatePoolData = async (name, poolid, apr, target) => {
 const updateData = async () => {
   fetchAuraApr("pxETH/wETH", 185);
   fetchAuraApr("rETH/wETH", 109);
-  fetchAuraApr("alcx/wETH", 74);
+  // fetchAuraApr("alcx/wETH", 74);
 
   fetchConvexApr("ALCX/FRAXBP", 120);
-  fetchConvexApr("OHM/FRAXBP", 138); // weird
+  // fetchConvexApr("OHM/FRAXBP", 138); // weird
   fetchConvexApr("stETH/ETH", 25);
   fetchConvexApr("pyUSD/USDC", 270);
   fetchConvexApr("PXETH/WETH", 271);
