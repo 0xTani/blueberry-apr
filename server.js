@@ -2,7 +2,12 @@ const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
 const sqlite3 = require("sqlite3").verbose();
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
+// import puppeteer from "https://deno.land/x/puppeteer@16.2.0/mod.ts";
+(async () => {
+  const puppeteer = await import("https://deno.land/x/puppeteer@16.2.0/mod.ts");
+  // Use the module
+})();
 const cron = require("node-cron");
 const cors = require("cors");
 
@@ -36,6 +41,11 @@ async function fetchAuraApr(name, poolId) {
     // args: ["--no-sandbox", "--disable-setuid-sandbox"],
     // dumpio: true,
   });
+  // const browser = await puppeteer.connect({
+  //   browserWSEndpoint: `wss://chrome.browserless.io?token=${Deno.env.get(
+  //     'PUPPETEER_BROWSERLESS_IO_KEY'
+  //   )}`,
+  // })
   const page = await browser.newPage();
   await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
     waitUntil: "networkidle0",
@@ -158,6 +168,6 @@ app.get("/apr", (req, res) => {
 });
 
 server.listen(3030, () => {
-  // updateData();
+  updateData();
   console.log("Server started on http://localhost:3030");
 });
