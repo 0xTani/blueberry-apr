@@ -123,20 +123,20 @@ const updatePoolData = async (name, poolid, apr, target) => {
 };
 
 const updateData = async () => {
-  fetchAuraApr("pxETH/wETH", 185);
-  fetchAuraApr("rETH/wETH", 109);
-  fetchAuraApr("USDT/GHO/USDC", 157);
-  fetchAuraApr("TBTC/WBTC", 159);
-  fetchAuraApr("sUSDe/USDC", 208);
+  await fetchAuraApr("pxETH/wETH", 185);
+  await fetchAuraApr("rETH/wETH", 109);
+  await fetchAuraApr("USDT/GHO/USDC", 157);
+  await fetchAuraApr("TBTC/WBTC", 159);
+  await fetchAuraApr("sUSDe/USDC", 208);
   // fetchAuraApr("alcx/wETH", 74);
 
-  fetchConvexApr("ALCX/FRAXBP", 120);
+  await fetchConvexApr("ALCX/FRAXBP", 120);
   // fetchConvexApr("OHM/FRAXBP", 138); // weird
-  fetchConvexApr("stETH/ETH", 25);
-  fetchConvexApr("pyUSD/USDC", 270);
-  fetchConvexApr("PXETH/WETH", 271);
-  fetchConvexApr("CRVUSD/USDC", 182);
-  fetchConvexApr("CRVUSD/USDT", 179);
+  await fetchConvexApr("stETH/ETH", 25);
+  await fetchConvexApr("pyUSD/USDC", 270);
+  await fetchConvexApr("PXETH/WETH", 271);
+  await fetchConvexApr("CRVUSD/USDC", 182);
+  await fetchConvexApr("CRVUSD/USDT", 179);
 };
 
 // Schedule data updates every 10 minutes using cron syntax
