@@ -94,25 +94,38 @@ async function fetchConvexApr(name, poolId) {
   // page.setDefaultNavigationTimeout(480000);
   // await page.setJavaScriptEnabled(false);
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
-    waitUntil: "networkidle0",
+    // waitUntil: "networkidle0",
   });
   console.log(`page goto convex ${name}`);
 
   // Using XPath to find the element containing the APR percentage
-
-  const apr = await page.evaluate(() => {
-    const allSpans = Array.from(document.querySelectorAll("span"));
-    // Find the span that contains "proj."
-    const projSpan = allSpans.find((span) =>
-      span.textContent ? span.textContent.includes("proj.") : false
-    );
-    if (projSpan) {
-      const textContent = projSpan.textContent ?? "";
-      const number = textContent.split("%")[0]; // Regex to extract digits followed by a '%'
-      return !Number.isNaN(number) ? Number(number) : 0;
-    }
-    return 0;
+  await page.waitForSelector(".MuiAccordionSummary-content", {
+    timeout: 180000,
   });
+
+  const evaluate = async () => {
+    const apr = await page.evaluate(() => {
+      const allSpans = Array.from(document.querySelectorAll("span"));
+      const projSpan = allSpans.find((span) =>
+        span.textContent?.includes("proj.")
+      );
+      if (projSpan) {
+        const textContent = projSpan.textContent ?? "";
+        const number = parseFloat(textContent.split("%")[0]);
+        return !isNaN(number) ? number : 0;
+      }
+      return 0;
+    });
+    return apr;
+  };
+
+  let apr = await evaluate();
+  if (apr === 0) {
+    // Retry after 10 seconds if APR is 0
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+    apr = await evaluate();
+  }
+
   updatePoolData(name, poolId, apr, "Convex");
 
   await browser.close();
