@@ -70,7 +70,7 @@ async function fetchConvexApr(name, poolId) {
   console.log(`fetching convex ${name}`);
   const browser = await puppeteer.launch({
     // executablePath: "/usr/bin/chromium-browser",
-    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
     dumpio: true,
   });
   console.log(`page loaded convex ${name}`);
