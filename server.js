@@ -74,7 +74,12 @@ async function fetchConvexApr(name, poolId) {
   const browser = await puppeteer.launch({
     headless: true,
     // executablePath: "/usr/bin/chromium-browser",
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-gpu",
+      "--disable-dev-shm-usage",
+    ],
     dumpio: true,
   });
   console.log(`page loaded convex ${name}`);
@@ -91,7 +96,7 @@ async function fetchConvexApr(name, poolId) {
     )
   );
 
-  page.setDefaultNavigationTimeout(60000);
+  page.setDefaultNavigationTimeout(120000);
   // await page.setJavaScriptEnabled(false);
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
     // waitUntil: "networkidle0",
@@ -100,7 +105,7 @@ async function fetchConvexApr(name, poolId) {
 
   // Using XPath to find the element containing the APR percentage
   await page.waitForSelector(".MuiAccordionSummary-content", {
-    timeout: 180000,
+    timeout: 580000,
   });
 
   const evaluate = async () => {
