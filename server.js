@@ -33,7 +33,7 @@ async function fetchAuraApr(name, poolId) {
 
   const browser = await puppeteer.launch({
     // executablePath: "/usr/bin/chromium-browser",
-    // args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
     // dumpio: true,
   });
   const page = await browser.newPage();
