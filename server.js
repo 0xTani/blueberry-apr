@@ -32,37 +32,52 @@ async function fetchAuraApr(name, poolId) {
   console.log(`fetching aura ${name}`);
 
   const browser = await puppeteer.launch({
-    // executablePath: "/usr/bin/chromium-browser",
-    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
     headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
     dumpio: true,
   });
   const page = await browser.newPage();
-  // await page.setJavaScriptEnabled(false);
-  // page.setDefaultNavigationTimeout(480000);
+  page.on("console", (msg) => console.log("PAGE LOG:", msg.text()));
+  page.on("error", (err) => console.error("PAGE ERROR:", err));
+  page.on("pageerror", (pageErr) => console.error("PAGE PAGEERROR:", pageErr));
+  page.on("requestfailed", (request) =>
+    console.error(
+      "PAGE REQUESTFAILED:",
+      request.url(),
+      request.failure().errorText
+    )
+  );
+
+  page.setDefaultNavigationTimeout(120000);
   await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
-    waitUntil: "networkidle0",
+    // waitUntil: "networkidle0",
   });
 
-  // Using XPath to find the element containing the APR percentage
+  await page.waitForSelector(".MuiTypography-root", { timeout: 180000 });
 
-  const apr = await page.evaluate(() => {
-    // Find the <p> with text 'Current vAPR'
-    const vAPRTextElement = [...document.querySelectorAll("p")].find(
-      (p) => !!p.textContent && p.textContent.includes("Current vAPR")
-    );
+  const evaluate = async () => {
+    const apr = await page.evaluate(() => {
+      const vAPRTextElement = [...document.querySelectorAll("p")].find((p) =>
+        p.textContent?.includes("Current vAPR")
+      );
+      if (vAPRTextElement && vAPRTextElement.nextElementSibling) {
+        const aprElement =
+          vAPRTextElement.nextElementSibling.querySelector("p");
+        const aprElementText = aprElement?.textContent;
+        const number = parseFloat(aprElementText?.replace("%", "") ?? "0");
+        return !isNaN(number) ? number : 0;
+      }
+      return 0;
+    });
+    return apr;
+  };
 
-    // Navigate to the next sibling <div> and find the <p> inside it
-    if (vAPRTextElement && vAPRTextElement.nextElementSibling) {
-      const aprElement = vAPRTextElement.nextElementSibling.querySelector("p");
-      const aprElementText = aprElement ? aprElement.textContent : null;
-      const aprValue = aprElementText
-        ? Number(aprElementText.replace("%", ""))
-        : 0;
-      return aprValue;
-    }
-    return 0;
-  });
+  let apr = await evaluate();
+  if (apr === 0) {
+    // Retry after 10 seconds if APR is 0
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+    apr = await evaluate();
+  }
 
   updatePoolData(name, poolId, apr, "Aura");
 
@@ -105,7 +120,7 @@ async function fetchConvexApr(name, poolId) {
 
   // Using XPath to find the element containing the APR percentage
   await page.waitForSelector(".MuiAccordionSummary-content", {
-    timeout: 580000,
+    timeout: 180000,
   });
 
   const evaluate = async () => {
@@ -158,11 +173,11 @@ const updatePoolData = async (name, poolid, apr, target) => {
 };
 
 const updateData = async () => {
-  // await fetchAuraApr("pxETH/wETH", 185);
-  // await fetchAuraApr("rETH/wETH", 109);
-  // await fetchAuraApr("USDT/GHO/USDC", 157);
-  // await fetchAuraApr("TBTC/WBTC", 159);
-  // await fetchAuraApr("sUSDe/USDC", 208);
+  await fetchAuraApr("pxETH/wETH", 185);
+  await fetchAuraApr("rETH/wETH", 109);
+  await fetchAuraApr("USDT/GHO/USDC", 157);
+  await fetchAuraApr("TBTC/WBTC", 159);
+  await fetchAuraApr("sUSDe/USDC", 208);
   // fetchAuraApr("alcx/wETH", 74);
 
   await fetchConvexApr("ALCX/FRAXBP", 120);
