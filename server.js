@@ -127,11 +127,11 @@ const updatePoolData = async (name, poolid, apr, target) => {
 };
 
 const updateData = async () => {
-  await fetchAuraApr("pxETH/wETH", 185);
-  await fetchAuraApr("rETH/wETH", 109);
-  await fetchAuraApr("USDT/GHO/USDC", 157);
-  await fetchAuraApr("TBTC/WBTC", 159);
-  await fetchAuraApr("sUSDe/USDC", 208);
+  // await fetchAuraApr("pxETH/wETH", 185);
+  // await fetchAuraApr("rETH/wETH", 109);
+  // await fetchAuraApr("USDT/GHO/USDC", 157);
+  // await fetchAuraApr("TBTC/WBTC", 159);
+  // await fetchAuraApr("sUSDe/USDC", 208);
   // fetchAuraApr("alcx/wETH", 74);
 
   await fetchConvexApr("ALCX/FRAXBP", 120);
