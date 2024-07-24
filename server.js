@@ -37,6 +37,7 @@ async function fetchAuraApr(name, poolId) {
     // dumpio: true,
   });
   const page = await browser.newPage();
+  page.setDefaultNavigationTimeout(120000);
   await page.goto(`https://app.aura.finance/#/1/pool/${poolId}`, {
     waitUntil: "networkidle0",
   });
@@ -76,6 +77,7 @@ async function fetchConvexApr(name, poolId) {
   console.log(`page loaded convex ${name}`);
 
   const page = await browser.newPage();
+  page.setDefaultNavigationTimeout(120000);
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
     waitUntil: "networkidle0",
   });
