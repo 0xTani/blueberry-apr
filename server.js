@@ -34,7 +34,8 @@ async function fetchAuraApr(name, poolId) {
   const browser = await puppeteer.launch({
     // executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    // dumpio: true,
+    headless: true,
+    dumpio: true,
   });
   const page = await browser.newPage();
   // await page.setJavaScriptEnabled(false);
@@ -71,6 +72,7 @@ async function fetchAuraApr(name, poolId) {
 async function fetchConvexApr(name, poolId) {
   console.log(`fetching convex ${name}`);
   const browser = await puppeteer.launch({
+    headless: true,
     // executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
     dumpio: true,
