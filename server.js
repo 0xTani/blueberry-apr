@@ -91,7 +91,7 @@ async function fetchConvexApr(name, poolId) {
     )
   );
 
-  page.setDefaultNavigationTimeout(480000);
+  page.setDefaultNavigationTimeout(60000);
   // await page.setJavaScriptEnabled(false);
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
     // waitUntil: "networkidle0",
