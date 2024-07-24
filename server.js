@@ -80,6 +80,17 @@ async function fetchConvexApr(name, poolId) {
   console.log(`page loaded convex ${name}`);
 
   const page = await browser.newPage();
+  page.on("console", (msg) => console.log("PAGE LOG:", msg.text()));
+  page.on("error", (err) => console.error("PAGE ERROR:", err));
+  page.on("pageerror", (pageErr) => console.error("PAGE PAGEERROR:", pageErr));
+  page.on("requestfailed", (request) =>
+    console.error(
+      "PAGE REQUESTFAILED:",
+      request.url(),
+      request.failure().errorText
+    )
+  );
+
   // page.setDefaultNavigationTimeout(480000);
   // await page.setJavaScriptEnabled(false);
   await page.goto(`https://curve.convexfinance.com/stake/ethereum/${poolId}`, {
